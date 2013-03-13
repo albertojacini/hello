@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}La mia libreria{% endblock %}
+{% block content %}
+
+
+<h1><a href="/libri/">La mia libreria</a></h1>
+{% if genere %}
+<h2>Genere: {{ genere }}</h2>
+{% endif %}
+{% if autore %}
+<h2>Autore: {{ autore }}</h2>
+{% endif %}
+
+<dl>
+{% for libro in libri %}
+    <dt><strong>"{{ libro.titolo }}"</strong></dt>
+    <dd><em><a href="/autori/{{ libro.autore.cognome }}">{{ libro.autore }}</a></em> -
+		<a href="/libri/generi/{{ libro.genere.id}}">{{ libro.genere }}</a></dd>
+    <dd><small>acquistato il {{ libro.data_acquisto|date:"j F \d\e\l Y" }}</small></dd>
+{% endfor %}
+</dl>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Autore {{ autore.nome_cognome }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ autore.nome_cognome }}</h1>
+<form method="POST" action=".">{% csrf_token %}
+	<ul>
+	{% for libro, preferito in libri %}
+	<li> <input name="libro_pk" type="checkbox"
+		{% if preferito %}checked="1"{% endif %}
+		value="{{ libro.pk }}">
+	{{ libro }} - {{ libro.genere }} 
+	</li>
+	{% endfor %}
+	</ul>
+<input type="submit" value="salva">
+</form>
+<hr/>
+<h2>Preferiti</h2>
+<ul>
+	{% for libro in preferiti %}
+		<li> "{{ libro.titolo }}" di <strong>
+			{{ libro.autore.nome_cognome }}</strong>,
+			{{ libro.genere }}</li>
+	{% endfor %}
+</ul>
+
+
+{% endblock content %}
