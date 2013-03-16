@@ -3,7 +3,7 @@
 <h1>Ricerca Wikipedia</h1>
 <form action="." method="POST">
     {{ form.as_p }}
-    <input type="submit" value="Cerca" />
+    <input type="submit" value="Cerca" />{% csrf_token %}
 </form>
 {% if risultati %}
 <h2>{{ risultati|length }} risultati</h2>

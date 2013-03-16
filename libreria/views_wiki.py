@@ -1,9 +1,10 @@
 import urllib2
 from django import forms
+from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404
-from django.utils.simplejson.decoder import JSONDecoder
+from django.utils import simplejson
 from models import *
 
 
@@ -36,9 +37,9 @@ def ricerca(request):
                             autore.cognome)
             link = wiki_link % form.cleaned_data['wikipedia']
             dati = urllib2.urlopen(url.encode('utf-8')).read()
-            valori = JSONDecoder().decode(dati)
+            valori = simplejson.JSONDecoder().decode(dati)
             risultati = valori['query']['search']
     else:
         form = WikisearchForm()
     return render_to_response('wikisearch.html', { 'form': form,
-        'link': link, 'risultati': risultati,})
+        'link': link, 'risultati': risultati,}, context_instance=RequestContext(request))
