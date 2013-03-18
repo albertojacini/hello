@@ -20,6 +20,7 @@ class WikisearchForm(forms.Form):
                     choices=((10,"10"),
                              (50,"50"),
                              (100,"100"))))
+    commento = forms.CharField(widget=forms.Textarea)
 
 
 wiki_url_api="http://%s.wikipedia.org/w/api.php?action=query&""format=json&srlimit=%s&list=search&srsearch=%s"
@@ -27,7 +28,7 @@ wiki_link="http://%s.wikipedia.org/wiki/"
 
 
 def ricerca(request):
-    risultati = link = None
+    commento = risultati = link = None
     if request.method == 'POST':
         form = WikisearchForm(request.POST)
         if form.is_valid():
@@ -39,7 +40,8 @@ def ricerca(request):
             dati = urllib2.urlopen(url.encode('utf-8')).read()
             valori = simplejson.JSONDecoder().decode(dati)
             risultati = valori['query']['search']
+            commento = form.cleaned_data['commento']
     else:
         form = WikisearchForm()
     return render_to_response('wikisearch.html', { 'form': form,
-        'link': link, 'risultati': risultati,}, context_instance=RequestContext(request))
+        'link': link, 'risultati': risultati, 'commento': commento}, context_instance=RequestContext(request))

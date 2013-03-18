@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-
+from settings import MEDIA_ROOT
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     #url(r'^hello/', include('hello.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
+    
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
@@ -22,6 +23,7 @@ urlpatterns = patterns('',
     (r'^libri/generi/(\d+)/$', "libreria.views.libri_genere"),
     (r'^libri/ricerca/$', "libreria.views_wiki.ricerca"),
     (r'^test/$', 'libreria.views.test'),
+    (r'^content/(?P<path>.*/.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT}),
     url(r'^autori/(?P<id>\d+)/$', 'libreria.views.autore_dettaglio', name='dettaglio_autore_id'),
     url(r'^autori/(?P<cognome>[a-zA-Z]\w*)/$', 'libreria.views.autore_dettaglio', name='dettaglio_autore_cognome'),
 )
