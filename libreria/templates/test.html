@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block title %}test{% endblock %}
 {% block content %}
-{{ request.path }} jygghgj
+<!-- <table border="0" cellspacing="5" cellpadding="5">
+	{% for key, value in request.META.items %}
+	{% cycle '<tr>' '' %}
+		<td> {{ key }}</td>
+		<td>{{ value }}</td>
+		{% cycle  '' '<tr>' %}
+	{% endfor %}
+</table>  -->
+{{ request }}
 {% endblock %}

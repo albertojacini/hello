@@ -1,4 +1,6 @@
 # Create your views here.
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.template import Context, loader 
 from django.core.context_processors import csrf
 from django.template import RequestContext
@@ -62,7 +64,12 @@ def libri_autore(request, id):
     return render_to_response('libri.html', {
         'libri': Libro.objects.filter(autore=autore).order_by('titolo'),
         'autore': autore,})
-    
+
+
 def test(request):
-    return render_to_response('test.html', {'request': 'request', 
-    })
+    if request.user.is_authenticated():
+        return HttpResponse("utente %s loggato" % request.user.first_name)
+    else:
+        return HttpResponse("utente anonimo")
+    #return render_to_response('test.html', {'request': request, 
+    #})
